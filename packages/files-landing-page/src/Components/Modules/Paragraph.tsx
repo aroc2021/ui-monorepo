@@ -7,6 +7,7 @@ const useStyles = makeStyles(({ palette }: ITheme) => {
     main: {
       color: palette.additional["gray"][6],
       maxWidth: "400px",
+      fontFamily: "'Archivo', sans-serif",
     },
   })
 })

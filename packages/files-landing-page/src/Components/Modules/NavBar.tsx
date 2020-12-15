@@ -33,6 +33,7 @@ const useStyles = makeStyles(
       },
       navlink: {
         color: palette.common.white.main,
+        fontFamily: "'Archivo', sans-serif",
         textDecoration: "none",
         "&:hover": {
           color: palette.additional["gray"][7],

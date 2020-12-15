@@ -8,6 +8,7 @@ const theme = createTheme({
   globalStyling: {
     body: {
       color: "#fafafa",
+      fontFamily: "'Archivo', sans-serif",
     },
     a: {
       color: "#fafafa",

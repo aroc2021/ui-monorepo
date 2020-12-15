@@ -54,7 +54,7 @@ const useStyles = makeStyles(
         marginTop: constants.generalUnit * 4,
         color: palette.additional["gray"][3],
         position: "relative",
-        padding: "1.2rem 2rem !important",
+        padding: "1.2rem 2rem",
         background: "transparent",
         "& > a": {
           textDecoration: "none",
@@ -73,7 +73,7 @@ const useStyles = makeStyles(
           fontSize: constants.generalUnit * 2,
         },
         [breakpoints.down("sm")]: {
-          padding: "1rem 0",
+          padding: ".5rem 0",
           marginTop: constants.generalUnit,
         },
       },
