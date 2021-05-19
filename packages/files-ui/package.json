@@ -45,7 +45,10 @@
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.2",
     "@craco/craco": "^5.9.0",
+    "@cypress/webpack-preprocessor": "^5.8.0",
     "@ethersproject/experimental": "^5.1.2",
     "@lingui/babel-preset-react": "^2.9.2",
     "@lingui/cli": "^3.7.2",
@@ -62,10 +65,13 @@
     "@types/react-toast-notifications": "^2.4.0",
     "@types/yup": "^0.29.9",
     "@types/zxcvbn": "^4.4.0",
+    "babel-loader": "^8.2.2",
     "babel-plugin-macros": "^2.8.0",
     "cypress": "^7.3.0",
     "cypress-file-upload": "^5.0.7",
-    "eslint-plugin-cypress": "^2.11.3"
+    "eslint-plugin-cypress": "^2.11.3",
+    "find-webpack": "^2.2.1",
+    "webpack": "^5.37.1"
   },
   "scripts": {
     "postinstall": "yarn compile",

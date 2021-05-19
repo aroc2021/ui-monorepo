@@ -44,7 +44,13 @@ const SESSION_FILE = "cypress/fixtures/storage/sessionStorage.json"
 const LOCAL_FILE = "cypress/fixtures/storage/localStorage.json"
 const REFRSH_TOKEN_KEY = "csf.refreshToken"
 
-Cypress.Commands.add("web3Login", ({ saveBrowser = false, url = localHost, apiUrlBase = "https://stage.imploy.site/api/v1", useLocalAndSessionStorage = true, clearCSFBucket = false }: Web3LoginOptions = {}) => {
+Cypress.Commands.add("web3Login", ({
+  saveBrowser = false,
+  url = localHost,
+  apiUrlBase = "https://stage.imploy.site/api/v1",
+  useLocalAndSessionStorage = true,
+  clearCSFBucket = false
+}: Web3LoginOptions = {}) => {
   let session: Storage = []
   let local: Storage = []
 
@@ -132,30 +138,35 @@ Cypress.Commands.add("web3Login", ({ saveBrowser = false, url = localHost, apiUr
     cy.writeFile(LOCAL_FILE, newLocalString)
 
     if (clearCSFBucket) {
-      cy.request("POST", `${apiUrlBase}/user/refresh`, { "refresh": refreshToken })
-        .then((res) => res.body.access_token.token)
-        .then((accessToken) => {
-          cy.request({
-            method: "POST",
-            url: `${apiUrlBase}/files/ls`,
-            body: { "path": "/", "source": { "type": "csf" } },
-            auth: { 'bearer': accessToken }
-          }).then((res) => {
-            const toDelete = res.body.map(({ name }: { name: string }) => `/${name}`)
-            cy.request({
-              method: "POST",
-              url: `${apiUrlBase}/files/rm`,
-              body: { "paths": toDelete, "source": { "type": "csf" } },
-              auth: {'bearer': accessToken}
-            }).then(res => { 
-              if(!res.isOkStatusCode){
-                throw new Error(`unexpected answer when deleting files: ${JSON.stringify(res, null, 2)}`)  
-              }
-              res.isOkStatusCode && cy.reload()
-            })
-          })
+      cy.task("clearCsfBucket", { refreshToken, apiUrlBase })
+        .then(() => {
+          cy.reload()
         })
     }
+    // cy.request("POST", `${apiUrlBase}/user/refresh`, { "refresh": refreshToken })
+    //   .then((res) => res.body.access_token.token)
+    //   .then((accessToken) => {
+    //     cy.request({
+    //       method: "POST",
+    //       url: `${apiUrlBase}/files/ls`,
+    //       body: { "path": "/", "source": { "type": "csf" } },
+    //       auth: { "bearer": accessToken }
+    //     }).then((res) => {
+    //       const toDelete = res.body.map(({ name }: { name: string }) => `/${name}`)
+    //       cy.request({
+    //         method: "POST",
+    //         url: `${apiUrlBase}/files/rm`,
+    //         body: { "paths": toDelete, "source": { "type": "csf" } },
+    //         auth: { "bearer": accessToken }
+    //       }).then(res => {
+    //         if(!res.isOkStatusCode){
+    //           throw new Error(`unexpected answer when deleting files: ${JSON.stringify(res, null, 2)}`)
+    //         }
+    //         res.isOkStatusCode && cy.reload()
+    //       })
+    //     })
+    //   })
+    // }
   })
 
   cy.get("[data-cy=files-app-header", { timeout: 20000 }).should("be.visible")
